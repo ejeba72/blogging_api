@@ -7,9 +7,9 @@ const app = express();
 const PORT = process.env.PORT;
 // const DB_URI = process.env.DB_URI;
 
-app.get('/api', (req, res) => {
-  console.log('hello, world');
-  res.send(`hello, world`);
+app.get('/', (req, res) => {
+  console.log('Testing microphone, Terry G');
+  res.send(`My name is Optimus Prime`);
 });
 
 app.listen(PORT, () => {
