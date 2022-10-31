@@ -1,0 +1,21 @@
+{
+  "name": "blogging_api",
+  "version": "1.0.0",
+  "description": "This is an exam project for AltSchool Africa.",
+  "main": "server.js",
+  "repository": "git@github.com:ejeba72/blogging_api.git",
+  "author": "Emmanuel Eni <eejeba@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
