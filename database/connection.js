@@ -9,12 +9,10 @@ mongoDB().catch(err => console.log(err.message));
 
 async function mongoDB() {
   await connect(DB_URI);
-
-  connection.on('connected', () => {
-    console.log('MongoDB is connected, successfully');
-  });
 }
 
-// console.log('MongoDB is connected')
+connection.on('connected', () => {
+  console.log('MongoDB is connected, successfully');
+});
 
 module.exports = { mongoDB };
