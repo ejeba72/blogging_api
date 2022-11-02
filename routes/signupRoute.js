@@ -47,8 +47,8 @@ route.post('/', async (req, res) => {
 
     await newUser.save();
 
-    console.log('* Post signup request');
     res.send(`Hurray! Your sign up is successful!`);
+    console.log(`\n***SIGNUP POST REQUEST***`);
   } catch (err) {
     console.log(err.message);
     res.send(err.message);
@@ -67,6 +67,7 @@ route.get('/', async (req, res) => {
     };
 
     res.send(userdb);
+    console.log(`\n***BLOG GET REQUEST***`);
     console.log(userdb);
   } catch (err) {
     res.send(err.message);
