@@ -47,11 +47,11 @@ route.post('/', async (req, res) => {
 
     await newUser.save();
 
-    res.send(`Hurray! Your sign up is successful!`);
+    res.status(201).send(`Hurray! Your sign up is successful!`);
     console.log(`\n***SIGNUP POST REQUEST***`);
   } catch (err) {
     console.log(err.message);
-    res.send(err.message);
+    res.status(500).send(err.message);
   }
 });
 
@@ -66,11 +66,11 @@ route.get('/', async (req, res) => {
       documentList: allUsers,
     };
 
-    res.send(userdb);
+    res.status(200).send(userdb);
     console.log(`\n***BLOG GET REQUEST***`);
     console.log(userdb);
   } catch (err) {
-    res.send(err.message);
+    res.status(500).send(err.message);
     console.log(err.message);
   }
 });

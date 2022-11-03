@@ -1,40 +1,39 @@
 const { Schema, model } = require('mongoose');
 
-const blogSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
-    unique: true,
+const blogSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    description: {
+      type: String,
+    },
+    author: {
+      type: String,
+    },
+    state: {
+      type: String,
+      default: 'draft',
+      enum: ['draft', 'published'],
+    },
+    read_count: {
+      type: Number,
+    },
+    reading_time: {
+      type: Number,
+    },
+    tags: {
+      type: Array,
+    },
+    body: {
+      type: String,
+      required: true,
+    },
   },
-  description: {
-    type: String,
-  },
-  author: {
-    type: String,
-  },
-  state: {
-    type: String,
-    default: 'draft',
-    enum: ['draft', 'published'],
-  },
-  read_count: {
-    type: Number,
-  },
-  reading_time: {
-    type: Number,
-  },
-  tags: {
-    type: String,
-  },
-  body: {
-    type: String,
-    required: true,
-  },
-  timestamp: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  { timestamps: true }
+);
 
 const Blog = model('Blog', blogSchema);
 
