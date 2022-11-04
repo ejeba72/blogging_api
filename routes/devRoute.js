@@ -1,44 +1,15 @@
-/* 
-PLEASE NOTE: This route is for development purpose only.
-*/
+// This file exist just for development purpose only.
 
 const { Router } = require('express');
-const { Blog } = require('../Models/BlogModel');
+const { User } = require('../Models/UserModel');
 
 const route = Router();
 
-// Get-all route
-route.get('/allblogs', async (req, res) => {
-  try {
-    const allBlogs = await Blog.find();
+route.get('/all_users/', async (req, res) => {
+  const allUsers = await User.find();
 
-    res.status(200).send(allBlogs);
-
-    console.log(allBlogs);
-  } catch (err) {
-    res.status(500).send(err.message);
-    console.log(err.message);
-  }
-});
-
-// For testing purpose only (That is, I needed this piece of code during development)
-route.get('/allusers', async (req, res) => {
-  // try {} catch () {}
-  try {
-    const allUsers = await User.find();
-
-    const userdb = {
-      documentNo: allUsers.length,
-      documentList: allUsers,
-    };
-
-    res.status(200).send(userdb);
-    console.log(`\n***BLOG GET REQUEST***`);
-    console.log(userdb);
-  } catch (err) {
-    res.status(500).send(err.message);
-    console.log(err.message);
-  }
+  console.log(allUsers);
+  res.send(allUsers);
 });
 
 module.exports = { route };

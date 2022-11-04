@@ -3,7 +3,22 @@ This is the Sign up route. For the post method, the validation I created in the 
 */
 
 const { genSalt, hash } = require('bcrypt');
+const { config } = require('dotenv');
+const { sign } = require('jsonwebtoken');
 const { User } = require('../Models/UserModel');
+
+const expiration = 60 * 60;
+const JWT_SECRET = process.env.JWT_SECRET;
+
+// DOTENV CONFIG
+config();
+
+// JSON WEB TOKEN
+function createToken(id) {
+  return sign({ id }, JWT_SECRET, {
+    expiresIn: expiration,
+  });
+}
 
 // SIGN UP LOGIC
 async function signupLogic(req, res) {
@@ -41,7 +56,10 @@ async function signupLogic(req, res) {
 
     newUser.password = hashedPasswd;
 
-    await newUser.save();
+    const savedUser = await newUser.save();
+
+    const token = createToken(savedUser._id);
+    res.cookie('jwt', token, { maxAge: expiration * 1000, httpOnly: true });
 
     res.status(201).send(`Hurray! Your sign up is successful!`);
     console.log(`\n***SIGNUP POST REQUEST***`);
@@ -51,4 +69,13 @@ async function signupLogic(req, res) {
   }
 }
 
-module.exports = { signupLogic };
+// LOGIN LOGIC
+async function loginLogic(req, res) {
+  try {
+    res.status(200).send(`hello, world`);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}
+
+module.exports = { signupLogic, loginLogic };

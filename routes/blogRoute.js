@@ -18,7 +18,7 @@ const { Blog } = require('../Models/BlogModel');
 const route = Router();
 
 // Get Blog List
-route.get('/', async (req, res) => {
+route.get('/blog_list', async (req, res) => {
   try {
     const blog = await Blog.find();
 
@@ -40,7 +40,7 @@ route.get('/', async (req, res) => {
 });
 
 // Get Blog (i.e. a single article)
-route.get('/:id', async (req, res) => {
+route.get('/blog/:id', async (req, res) => {
   try {
     const { id } = req.params;
 
