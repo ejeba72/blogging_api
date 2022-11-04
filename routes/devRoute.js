@@ -8,7 +8,7 @@ const { Blog } = require('../Models/BlogModel');
 const route = Router();
 
 // Get-all route
-route.get('/', async (req, res) => {
+route.get('/allblogs', async (req, res) => {
   try {
     const allBlogs = await Blog.find();
 
@@ -22,7 +22,7 @@ route.get('/', async (req, res) => {
 });
 
 // For testing purpose only (That is, I needed this piece of code during development)
-route.get('/', async (req, res) => {
+route.get('/allusers', async (req, res) => {
   // try {} catch () {}
   try {
     const allUsers = await User.find();

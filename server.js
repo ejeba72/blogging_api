@@ -5,7 +5,7 @@ const { mongoDB } = require('./database/connection');
 const { route: homeRoute } = require('./routes/homeRoute');
 const { route: blogRoute } = require('./routes/blogRoute');
 const { route: editRoute } = require('./routes/editRoute');
-const { route: userRoute } = require('./routes/user');
+const { route: userRoute } = require('./routes/userRoute');
 const { route: devRoute } = require('./routes/devRoute');
 
 const app = express();
@@ -23,9 +23,6 @@ app.use('/api', blogRoute);
 app.use('/api', editRoute);
 app.use('/api', userRoute);
 app.use('/api', devRoute);
-// app.use('/api/user', userRoute);
-// app.use('/api/login', loginRoute);
-// app.use('/api/logout', logoutRoute);
 
 app.listen(PORT, () => {
   console.log(`Server is attentively listening for requests at port ${PORT}`);
