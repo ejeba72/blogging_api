@@ -1,3 +1,4 @@
+const { genSalt, hash } = require('bcrypt');
 const { Schema, model } = require('mongoose');
 
 function validateEmail(email) {
@@ -21,7 +22,7 @@ const userSchema = new Schema(
       required: [true, 'Hey, your last name is required'],
       maxlength: [
         50,
-        "Sorry, we can't afford  more than 50 characters for your first name",
+        "Sorry, we can't afford  more than 50 characters for your last name",
       ],
       trim: true,
     },
@@ -49,6 +50,13 @@ const userSchema = new Schema(
   },
   { timestamps: true }
 );
+
+// USING BCRYPT TO HASH NEW USER PASSWORD BEFORE SAVING USER DATA TO DB.
+userSchema.pre('save', async function (next) {
+  const salt = await genSalt();
+  this.password = await hash(this.password, salt);
+  next();
+});
 
 const User = model('User', userSchema);
 
