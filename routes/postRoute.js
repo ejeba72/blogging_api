@@ -4,7 +4,7 @@ const { Blog } = require('../Models/BlogModel');
 const route = Router();
 
 // Get all blog post by the author
-route.get('/my_blogs', async (req, res) => {
+route.get('/', async (req, res) => {
   try {
     const allBlogs = await Blog.find();
 
@@ -19,7 +19,7 @@ route.get('/my_blogs', async (req, res) => {
 });
 
 // Post Blog
-route.post('/create_post', async (req, res) => {
+route.post('/', async (req, res) => {
   try {
     const newBlog = new Blog(req.body);
 
@@ -42,7 +42,7 @@ route.post('/create_post', async (req, res) => {
 });
 
 // update
-route.patch('/edit_post/:id', async (req, res) => {
+route.patch('/:id', async (req, res) => {
   try {
     const { id } = req.params;
 

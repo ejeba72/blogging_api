@@ -5,6 +5,6 @@ const route = Router();
 
 // SIGN UP ROUTE
 route.post('/signup', signupLogic);
-route.get('/login', loginLogic);
+route.post('/login', loginLogic);
 
 module.exports = { route };
