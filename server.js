@@ -4,7 +4,9 @@ const { config } = require('dotenv');
 const { mongoDB } = require('./database/connection');
 const { route: homeRoute } = require('./routes/homeRoute');
 const { route: blogRoute } = require('./routes/blogRoute');
-const { route: signupRoute } = require('./routes/signupRoute');
+const { route: editRoute } = require('./routes/editRoute');
+const { route: userRoute } = require('./routes/user');
+const { route: devRoute } = require('./routes/devRoute');
 
 const app = express();
 const PORT = process.env.PORT;
@@ -17,8 +19,11 @@ mongoDB();
 app.use(express.json());
 app.use(cookieParser());
 app.use('/', homeRoute);
-app.use('/api/blog', blogRoute);
-app.use('/api/signup', signupRoute);
+app.use('/api', blogRoute);
+app.use('/api', editRoute);
+app.use('/api', userRoute);
+app.use('/api', devRoute);
+// app.use('/api/user', userRoute);
 // app.use('/api/login', loginRoute);
 // app.use('/api/logout', logoutRoute);
 
