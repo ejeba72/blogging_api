@@ -41,7 +41,10 @@ const route = Router();
 // GET PUBLISHED BLOG LIST
 route.get('/', async (req, res) => {
   try {
-    const blog = await Blog.find({ state: 'published' });
+    const { p = 1, lim = 20 } = req.query; // Pagination is defaulted to 20 blogs per page.
+    const blog = await Blog.find({ state: 'published' })
+      .limit(lim)
+      .skip((p - 1) * lim);
 
     const blogList = blog.map(article => {
       return {
