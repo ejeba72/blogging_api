@@ -18,10 +18,10 @@ const blogSchema = new Schema(
       default: 'draft',
       enum: ['draft', 'published'],
     },
-    read_count: {
+    readCount: {
       type: Number,
     },
-    reading_time: {
+    readingTime: {
       type: Number,
     },
     tags: {
