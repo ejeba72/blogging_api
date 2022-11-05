@@ -1,6 +1,7 @@
 const { config } = require('dotenv');
 const { verify } = require('jsonwebtoken');
 
+// DOTENV CONFIG
 config();
 
 const JWT_SECRET = process.env.JWT_SECRET;

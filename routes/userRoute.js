@@ -5,11 +5,11 @@ const {
   logoutLogic,
 } = require('../controllers/userController');
 
-const route = Router();
+const router = Router();
 
 // SIGN UP ROUTE
-route.post('/signup', signupLogic);
-route.post('/login', loginLogic);
-route.get('/logout', logoutLogic);
+router.post('/signup', signupLogic);
+router.post('/login', loginLogic);
+router.get('/logout', logoutLogic);
 
-module.exports = { route };
+module.exports = { router };
