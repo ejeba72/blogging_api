@@ -1,10 +1,13 @@
 const { Router } = require('express');
+const { verifyToken } = require('../middleware/authMiddleware');
 const { Blog } = require('../Models/BlogModel');
 
 const route = Router();
 
+// route.use(verifyToken());
+
 // Get all blog post by the author
-route.get('/', async (req, res) => {
+route.get('/', verifyToken, async (req, res) => {
   try {
     const allBlogs = await Blog.find();
 

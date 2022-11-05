@@ -59,4 +59,14 @@ async function loginLogic(req, res) {
   }
 }
 
-module.exports = { signupLogic, loginLogic };
+// LOGOUT LOGIC
+async function logoutLogic(req, res) {
+  try {
+    res.cookie('jwt', '', { maxAge: 1 });
+    res.status(200).send(`You've been logout successfully`);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}
+
+module.exports = { signupLogic, loginLogic, logoutLogic };
