@@ -33,7 +33,6 @@ async function signupLogic(req, res) {
     res.cookie('jwt', token, { maxAge: expiration * 1000, httpOnly: true });
 
     res.status(201).send(`Hurray! Your sign up is successful!`);
-    console.log(`\n***SIGNUP POST REQUEST***`);
     console.log(savedUser);
   } catch (err) {
     if (err.code === 11000) {

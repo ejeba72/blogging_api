@@ -9,7 +9,7 @@ const { Blog } = require('../Models/BlogModel');
 
 const route = Router();
 
-// route.use(verifyToken());
+route.use('/', verifyToken);
 
 // GET ALL BLOG POSTS
 route.get('/', async (req, res) => {
