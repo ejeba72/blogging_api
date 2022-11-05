@@ -29,8 +29,8 @@ async function signupLogic(req, res) {
 
     const savedUser = await newUser.save();
 
-    // const token = createToken(savedUser._id);
-    // res.cookie('jwt', token, { maxAge: expiration * 1000, httpOnly: true });
+    const token = createToken(savedUser._id);
+    res.cookie('jwt', token, { maxAge: expiration * 1000, httpOnly: true });
 
     res.status(201).send(`Hurray! Your sign up is successful!`);
     console.log(`\n***SIGNUP POST REQUEST***`);
@@ -47,32 +47,16 @@ async function signupLogic(req, res) {
 // LOGIN LOGIC
 async function loginLogic(req, res) {
   try {
-    const details = {
-      body: req.body,
-      header: req.headers,
-    };
-    res.status(200).send(details);
-    console.log(details);
+    const { email, password } = req.body;
+    const user = await User.login(email, password);
+
+    const token = createToken(user._id);
+    res.cookie('jwt', token, { maxAge: expiration * 1000, httpOnly: true });
+
+    res.status(200).send(user.firstName);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(400).send(err.message);
   }
 }
 
 module.exports = { signupLogic, loginLogic };
-
-// {
-//   "body": {
-//     "email": "ruth@gmail.com",
-//     "password": "ruth1234"
-//   },
-//   "header": {
-//     "content-length": "57",
-//     "accept-encoding": "gzip, deflate, br",
-//     "cookie": "jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNjU0YmIxZGM2ZDZiOGQxMjA2MzY0YSIsImlhdCI6MTY2NzU4Mjg5OCwiZXhwIjoxNjY3NTg2NDk4fQ.JAtoEeHM2NJdtkTiKUxvz6ClVu8pHFfvK-R260-EX9c",
-//     "accept": "*/*",
-//     "user-agent": "Thunder Client (https://www.thunderclient.com)",
-//     "content-type": "application/json",
-//     "host": "127.0.0.1:8888",
-//     "connection": "close"
-//   }
-// }

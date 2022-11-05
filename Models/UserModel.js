@@ -1,4 +1,4 @@
-const { genSalt, hash } = require('bcrypt');
+const { genSalt, hash, compare } = require('bcrypt');
 const { Schema, model } = require('mongoose');
 
 function validateEmail(email) {
@@ -57,6 +57,22 @@ userSchema.pre('save', async function (next) {
   this.password = await hash(this.password, salt);
   next();
 });
+
+// COMPARING "LOGIN PASSWORD" WITH "DATABASE PASSWORD"
+userSchema.statics.login = async function (email, password) {
+  const user = await this.findOne({ email });
+  if (!user) {
+    throw Error(`Invalid email and password.`);
+  }
+
+  const comparePwd = await compare(password, user.password);
+
+  if (!comparePwd) {
+    throw Error(`Invalid email and password.`);
+  }
+
+  return user;
+};
 
 const User = model('User', userSchema);
 
