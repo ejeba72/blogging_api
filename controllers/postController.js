@@ -3,7 +3,10 @@ const { Blog } = require('../Models/BlogModel');
 // GET ALL LOGIC
 async function getAllLogic(req, res) {
   try {
-    const allBlogs = await Blog.find();
+    const { p = 1, lim = 20 } = req.query; // Paginattion is defaulted to 20 blogs per page.
+    const allBlogs = await Blog.find()
+      .limit(lim)
+      .skip((p - 1) * lim);
 
     res.status(200).send(allBlogs);
     console.log(allBlogs);

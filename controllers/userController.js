@@ -52,7 +52,9 @@ async function loginLogic(req, res) {
     const token = createToken(user._id);
     res.cookie('jwt', token, { maxAge: expiration * 1000, httpOnly: true });
 
-    res.status(200).send(user.firstName);
+    res
+      .status(200)
+      .send(`Hello ${user.firstName}! You've been logged in successfully.`);
   } catch (err) {
     res.status(400).send(err.message);
   }
