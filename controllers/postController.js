@@ -1,15 +1,17 @@
+const mongoose = require('mongoose');
+const { estimateReadingTime } = require('../helpers/utilities');
 const { Blog } = require('../Models/BlogModel');
 
 // GET ALL LOGIC
 async function getAllLogic(req, res) {
   try {
-    const { p = 1, lim = 20 } = req.query; // Paginattion is defaulted to 20 blogs per page.
-    const allBlogs = await Blog.find()
+    const { p = 1, lim = 20 } = req.query; // Pagination is defaulted to 20 blogs per page.
+    const allBlogs = await Blog.find({ user: req.user })
       .limit(lim)
       .skip((p - 1) * lim);
 
-    res.status(200).send(allBlogs);
     console.log(allBlogs);
+    res.status(200).send(allBlogs);
   } catch (err) {
     res.status(500).send(err.message);
     console.log(err.message);
@@ -20,7 +22,9 @@ async function getAllLogic(req, res) {
 async function getListLogic(req, res) {
   try {
     const { p = 1, lim = 20 } = req.query; // Pagination is defaulted to 20 blogs per page.
-    const blog = await Blog.find()
+    const blog = await Blog.find({
+      user: req.user,
+    })
       .limit(lim)
       .skip((p - 1) * lim);
 
@@ -31,18 +35,19 @@ async function getListLogic(req, res) {
       };
     });
 
-    res.status(200).send(blogList);
     console.log(blogList);
+    res.status(200).send(blogList);
   } catch (err) {
-    res.status(500).send(err.message);
     console.log(err.message);
+    res.status(500).send(err.message);
   }
 }
 
 // CREATE POST LOGIC
 async function createPostLogic(req, res) {
   try {
-    const newBlog = new Blog(req.body);
+    const readingTime = estimateReadingTime(req.body.body);
+    const newBlog = new Blog({ ...req.body, user: req.user, readingTime });
 
     savedBlog = await newBlog.save();
 
@@ -51,12 +56,11 @@ async function createPostLogic(req, res) {
       Blog: savedBlog,
     };
 
-    res.status(201).send(successMsg);
-
     console.log(successMsg);
+    res.status(201).send(successMsg);
   } catch (err) {
-    res.status(500).send(err.message);
     console.log(err.message);
+    res.status(500).send(err.message);
   }
 }
 
@@ -67,30 +71,31 @@ async function updatePostLogic(req, res) {
 
     const { title, description, state, tags, body } = req.body;
 
-    // let blog = await Blog.findById(id);
-    const blog = await Blog.findById(id);
-
-    const { dbTitle, dbDescription, dbState, dbTags, dbBody } = blog;
+    const blog = await Blog.findOne({
+      _id: mongoose.Types.ObjectId(id),
+      user: req.user,
+    });
 
     if (!blog) {
       return res.status(404).send(`404 Not Found`);
     }
 
-    // blog = req.body;
+    // console.log(req.body, blog);
 
-    blog.title = title || dbTitle;
-    blog.description = description || dbDescription;
-    blog.state = state || dbState;
-    blog.tags = tags || dbTags;
-    blog.body = body || dbBody;
+    blog.title = title || blog.title;
+    blog.description = description || blog.description;
+    blog.state = state || blog.state;
+    blog.tags = tags || blog.tags;
+    blog.body = body || blog.body;
+    blog.readingTime = estimateReadingTime(blog.body);
 
     await blog.save();
 
-    res.status(200).send(blog);
     console.log(blog);
+    res.status(200).send(blog);
   } catch (err) {
-    res.send(err.message);
     console.log(err.message);
+    res.send(err.message);
   }
 }
 
@@ -99,7 +104,7 @@ async function deletePostLogic(req, res) {
   try {
     const { id } = req.params;
 
-    await Blog.deleteOne({ _id: id });
+    await Blog.deleteOne({ _id: mongoose.Types.ObjectId(id), user: req.user });
 
     return res.status(200).send(`Your blog was deleted successfully`);
   } catch (err) {

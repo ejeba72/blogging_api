@@ -12,20 +12,28 @@ const blogSchema = new Schema(
     },
     author: {
       type: String,
+      index: true,
+    },
+    user: {
+      type: String,
+      required: true,
     },
     state: {
       type: String,
       default: 'draft',
       enum: ['draft', 'published'],
+      index: true,
     },
     readCount: {
       type: Number,
+      default: 0,
     },
     readingTime: {
       type: Number,
     },
     tags: {
       type: Array,
+      index: true,
     },
     body: {
       type: String,

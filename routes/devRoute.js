@@ -13,8 +13,8 @@ router.get('/all_users/', async (req, res) => {
     console.log(allUsers);
     res.send(allUsers);
   } catch (err) {
-    res.send(err.message);
     console.log(err.message);
+    res.send(err.message);
   }
 });
 
@@ -25,8 +25,8 @@ router.get('/all_blogs/', async (req, res) => {
     console.log(allBlogs);
     res.send(allBlogs);
   } catch (err) {
-    res.send(err.message);
     console.log(err.message);
+    res.send(err.message);
   }
 });
 

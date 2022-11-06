@@ -30,10 +30,12 @@ async function signupLogic(req, res) {
     const savedUser = await newUser.save();
 
     const token = createToken(savedUser._id);
-    res.cookie('jwt', token, { maxAge: expiration * 1000, httpOnly: true });
 
-    res.status(201).send(`Hurray! Your sign up is successful!`);
     console.log(savedUser);
+    res.status(201).send({
+      token,
+      message: `Hurray! Your sign up is successful!`,
+    });
   } catch (err) {
     if (err.code === 11000) {
       return res.status(400).send(`Email has already been taken`);
@@ -50,11 +52,11 @@ async function loginLogic(req, res) {
     const user = await User.login(email, password);
 
     const token = createToken(user._id);
-    res.cookie('jwt', token, { maxAge: expiration * 1000, httpOnly: true });
 
-    res
-      .status(200)
-      .send(`Hello ${user.firstName}! You've been logged in successfully.`);
+    res.status(200).send({
+      message: `Hello ${user.firstName}! You've been logged in successfully.`,
+      token,
+    });
   } catch (err) {
     res.status(400).send(err.message);
   }

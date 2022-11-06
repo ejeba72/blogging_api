@@ -8,7 +8,11 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 // VERIFY JWT TOKEN
 function verifyToken(req, res, next) {
-  const { jwt: token } = req.cookies;
+  const authHeader = req.headers.authorization;
+
+  console.log('Login authorization header', req.headers);
+
+  const token = authHeader?.replace('Bearer ', '');
 
   if (!token) {
     return res.status(401).send(`401 Unauthorized`);
@@ -21,6 +25,7 @@ function verifyToken(req, res, next) {
     }
 
     console.log(decodedToken);
+    req.user = decodedToken.id;
     next();
   });
 }
