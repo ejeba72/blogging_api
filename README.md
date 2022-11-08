@@ -29,7 +29,7 @@ This Blogging Api is an examination project for AltSchool's Backend NodeJS Secon
 
 ## Base URL
 
-- 127.0.0.1:8888
+- https://blogging-app-altschool.herokuapp.com/
 
 ## Models
 
@@ -63,7 +63,7 @@ This Blogging Api is an examination project for AltSchool's Backend NodeJS Secon
 
 ### Signup User
 
-- Route: 127.0.0.1:8888/api/v1/users/signup
+- Route: https://blogging-app-altschool.herokuapp.com/api/v1/users/signup
 - Method: POST
 - Body:
 
@@ -89,7 +89,7 @@ Hurray! Your sign up is successful!
 
 ### Login User
 
-- Route: /order
+- Route: https://blogging-app-altschool.herokuapp.com/api/v1/users/login
 - Method: POST
 - Body:
 
@@ -112,7 +112,7 @@ Success
 
 ### Create Post
 
-- Route: /api/v1/posts
+- Route: https://blogging-app-altschool.herokuapp.com/api/v1/posts
 - Method: POST
 - Header
   - Authorization: Bearer {token}
@@ -154,7 +154,7 @@ Success
 
 ### Get All
 
-- Route: /api/v1/posts/
+- Route: https://blogging-app-altschool.herokuapp.com/api/v1/posts/
 - Method: GET
 - Header
 
@@ -184,7 +184,7 @@ Success
 
 ### Get List
 
-- Route: /api/v1/posts/post_list
+- Route: https://blogging-app-altschool.herokuapp.com/api/v1/posts/post_list
 - Method: GET
 - Header:
   - Authorization: Bearer {token}
