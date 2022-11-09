@@ -21,13 +21,24 @@ async function getAllLogic(req, res) {
 // GET LIST LOGIC
 async function getListLogic(req, res) {
   try {
-    const { p = 1, lim = 20 } = req.query; // Pagination is defaulted to 20 blogs per page.
-    const blog = await Blog.find({
+    const { p = 1, lim = 20, state } = req.query; // Pagination is defaulted to 20 blogs per page.
+
+    const findBlog = {
       user: req.user,
-    })
+    };
+
+    // FILTER BY STATE
+    if (state)
+      findBlog.state = {
+        $regex: decodeURIComponent(state),
+        $options: 'i',
+      };
+
+    const blog = await Blog.find(findBlog)
       .limit(lim)
       .skip((p - 1) * lim);
 
+    // LIST OF BLOGS
     const blogList = blog.map(article => {
       return {
         title: article.title,
